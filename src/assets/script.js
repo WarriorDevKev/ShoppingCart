@@ -1,27 +1,35 @@
 const products = [];
 
 const cherry = {
-  name: "Cherry",
-  price: 4.99,
+  name: "Cereza",
+  price: 3.50,
   quantity: 0,
   productId: 1,
   image: "./images/cherry.jpg",
 };
 
-const orange = {
-  name: "Orange",
-  price: 6.99,
+const soursop = {
+  name: "Guanabana",
+  price: 5.99,
   quantity: 0,
   productId: 2,
-  image: "./images/orange.jpg",
+  image: "./images/soursop.jpg",
 };
 
 const strawberry = {
-  name: "Strawberry",
-  price: 9.99,
+  name: "Fresa",
+  price: 2.99,
   quantity: 0,
   productId: 3,
   image: "./images/strawberry.jpg",
+};
+
+  const mango = {
+    name: "Mango",
+    price: .99,
+    quantity: 0,
+    productId: 4,
+    image: "./images/mango.jpg",
 };
 /* ################################################### 
         Begin addProductToCart Function
@@ -29,7 +37,7 @@ const strawberry = {
 */
 
 // Add products to products array
-products.push(cherry, orange, strawberry);
+products.push(cherry, soursop, strawberry, mango);
 
 const cart = [];
 
@@ -37,10 +45,12 @@ function addProductToCart(sku) {
   // Find the product by SKU
   const product = products.find((p) => p.productId === sku);
 
+  /* ################################################### TESTING ❗
   if (!product) {
-    console.log(`Product with SKU ${sku} not found.`);
+    console.log(`Product with SKU#: ${sku} not found.`);
     return;
-  }
+  } */
+
   // Check if the product is already in the cart
   const cartItem = cart.find((item) => item.productId === sku);
 
@@ -56,8 +66,9 @@ function addProductToCart(sku) {
       image: product.image,
     });
   }
-
+/* ################################################### TESTING ❗
   console.log(cart);
+  */
 }
 /* ################################################### 
         Begin increaseQuantity Function
@@ -70,9 +81,12 @@ function increaseQuantity(productId) {
   // Increase the quantity of the product in the cart by 1
   product.quantity++;
 
+  /* ################################################### TESTING ❗
   // Log a message to the console to indicate that the product's quantity has been increased
-  console.log(`${product.name} quantity increased to ${product.quantity}`);
+      console.log(`${product.name} quantity increased to ${product.quantity}`);
+  */
 }
+
 /* ################################################### 
         Begin decreaseQuantity Function
    ################################################### 
@@ -103,15 +117,19 @@ function decreaseQuantity(productId) {
 function removeProductFromCart(productId) {
  const productIndex = cart.findIndex((item) => item.productId === productId);
 
+ /* ################################################### TESTING ❗
  // if product is not found in cart
- if (productIndex === -1) {
-  console.log(`product with productId number: ${productId} is not found`);
-  return;
- }
+  if (productIndex === -1) {
+    console.log(`product with productId number: ${productId} is not found`);
+    return;
+  } */
+
   // remove product from cart
   cart.splice(productIndex, 1);
- 
+
+ /* ################################################### TESTING ❗
  console.log(`Product with productId ${productId} has been removed from the cart.`)
+ */
 }
 
 /* ################################################### 
@@ -119,22 +137,26 @@ function removeProductFromCart(productId) {
    ################################################### 
 */
 
-// need global totalPaid variable
 function cartTotal() {
-
-  let totalPaid = 0;
-  for (const product of cart) {
-    totalPaid += product.price * product.quantity;
-  }
-  return totalPaid;
-  
+  let total = 0;
+  cart.forEach((product) => {
+    total += product.quantity * product.price;
+  });
+  return (total);
 }
+
 /* ################################################### 
         Begin pay Function
    ################################################### 
 */
+
+// need global totalPaid variable
+let totalPaid = 0;
+
 function pay(amount) {
-  return amount - cartTotal();
+  totalPaid += amount;
+
+  return totalPaid - cartTotal()
 }
 /* ################################################### 
         Begin emptyCart Function
